@@ -33,12 +33,12 @@ Código dinamico:
 
 int main() {
     int n;
-    scanf("%d", n);
+    scanf("%d", &n);
     int vetor[n];
     int i, temp;
     
     for(i = 0; i < n; i++){
-        scanf("%i", vetor[n]);
+        scanf("%d", &vetor[i]);
     }
 
     for (i = 0; i < n/2; i++) {
@@ -48,8 +48,9 @@ int main() {
     }
     printf("Vetor invertido:\n");
     for (i = 0; i < n; i++) {
-        printf("%i ", vetor[n]);
+        printf("%d ", vetor[i]);
     }
     
     return 0;
+
 }
