@@ -1,0 +1,140 @@
+#include <stdio.h>
+
+#define MAX_SIZE 3 // Define a capacidade máxima da pilha
+
+int pilha[MAX_SIZE]; // Declaração de um array para armazenar os elementos da pilha
+int topo = -1;       // Variável para rastrear o índice do topo da pilha, inicializado como -1 (indicando pilha vazia)
+
+
+void push(int elemento) {
+    if (topo < MAX_SIZE - 1) {    
+        pilha[++topo] = elemento; 
+    } else {
+        printf("Pilha cheia!\n"); 
+    }
+}
+
+// a função acima é responsável por inserir um elemento no topo da pilha
+
+int pop() {
+    if (topo == -1) {          
+        printf("Pilha vazia!\n");
+        return -1;               
+    } else {
+        return pilha[topo--];    
+    }
+}
+
+// a função acima é responsável por remover e retornar o elemento do topo da pilha
+
+int top() {
+    if (topo == -1) {           
+        printf("Pilha vazia!\n"); 
+        return -1;               
+    } else {
+        return pilha[topo];      
+    }
+}
+
+// a função acima é responsável por retornar o elemento do topo da pilha sem removê-lo
+
+void imprimir() {
+    printf("Conteúdo da pilha:\n");
+    for (int i = topo; i >= 0; i--) { 
+        printf("%d ", pilha[i]);     
+    }
+    printf("\n"); 
+}
+
+// a função acima é responsável por imprimir todos os elementos da pilha
+
+int main() {
+    push(10); 
+    push(20); 
+    push(30); 
+    imprimir(); 
+    printf("Elemento no topo: %d\n", top()); 
+    printf("Elemento removido: %d\n", pop()); 
+    imprimir(); 
+    return 0; 
+}
+
+
+Código modificado:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 3
+
+int *pilha;
+int topo = -1;
+int capacidade = MAX_SIZE;
+
+void expandirPilha() {
+    capacidade *= 2;
+    pilha = realloc(pilha, capacidade * sizeof(int));
+    if (pilha == NULL) {
+        printf("Erro ao expandir a pilha!\n");
+        exit(1);
+    }
+}
+
+void push(int elemento) {
+    if (topo < capacidade - 1) {
+        pilha[++topo] = elemento;
+    } else {
+        printf("Pilha cheia! Expandindo capacidade...\n");
+        expandirPilha();
+        pilha[++topo] = elemento;
+    }
+}
+
+int pop() {
+    if (topo == -1) {
+        printf("Pilha vazia!\n");
+        return -1;
+    } else {
+        return pilha[topo--];
+    }
+}
+
+int top() {
+    if (topo == -1) {
+        printf("Pilha vazia!\n");
+        return -1;
+    } else {
+        return pilha[topo];
+    }
+}
+
+void imprimir() {
+    printf("Conteúdo da pilha:\n");
+    for (int i = topo; i >= 0; i--) {
+        printf("%d ", pilha[i]);
+    }
+    printf("\n");
+}
+
+int estaVazia() {
+    return topo == -1;
+}
+
+int main() {
+    pilha = malloc(capacidade * sizeof(int));
+    if (pilha == NULL) {
+        printf("Erro ao alocar memória!\n");
+        return 1;
+    }
+
+    push(10);
+    push(20);
+    push(30);
+    imprimir();
+    printf("Elemento no topo: %d\n", top());
+    printf("Elemento removido: %d\n", pop());
+    imprimir();
+    free(pilha);
+    return 0;
+}
+
