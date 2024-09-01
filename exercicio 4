@@ -1,0 +1,153 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;              
+    struct Node* next;     
+    struct Node* prev;     
+} Node;
+
+// o struct acima define a estrutura do nó para a lista duplamente ligada
+
+Node* head = NULL;  // ponteiro global para o primeiro nó da lista 
+
+void insertFront(int value) {
+    Node* newNode = (Node*)malloc(sizeof(Node)); 
+    newNode->data = value;   
+    newNode->next = head;    
+    newNode->prev = NULL;    
+    if (head != NULL)       
+        head->prev = newNode; 
+    head = newNode;         
+}
+
+// a função acima é responsável por inserir um nó novo no começo da lista
+
+void deleteNode(Node* node) {
+    if (node == head)        
+        head = node->next;   
+    if (node->next != NULL)  
+        node->next->prev = node->prev;
+    if (node->prev != NULL)  
+        node->prev->next = node->next; 
+    free(node);             
+}
+
+// a função acima é responsável por deletar um nó específico da lista
+
+void printList() {
+    Node* temp = head;       
+    while (temp != NULL) {   
+        printf("%d ", temp->data); 
+        temp = temp->next;   
+    }
+    printf("\n");            
+}
+
+// a função acima é responsável por imprimir todos os elementos da lista
+
+int main() {
+    insertFront(10); 
+    insertFront(20); 
+    printList();     
+    return 0;
+}
+
+
+Código modificado:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+} Node;
+
+Node* head = NULL;
+
+void insertFront(int value) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = head;
+    newNode->prev = NULL;
+    if (head != NULL)
+        head->prev = newNode;
+    head = newNode;
+}
+
+void deleteNode(Node* node) {
+    if (node == head)
+        head = node->next;
+    if (node->next != NULL)
+        node->next->prev = node->prev;
+    if (node->prev != NULL)
+        node->prev->next = node->next;
+    free(node);
+}
+
+void printList() {
+    Node* temp = head;
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+void searchValue(int value) {
+    Node* temp = head;
+    while (temp != NULL) {
+        if (temp->data == value) {
+            printf("Valor %d encontrado.\n", value);
+            if (temp->prev != NULL)
+                printf("Valor anterior: %d\n", temp->prev->data);
+            else
+                printf("Valor anterior: NULL\n");
+            if (temp->next != NULL)
+                printf("Valor seguinte: %d\n", temp->next->data);
+            else
+                printf("Valor seguinte: NULL\n");
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("Valor %d não encontrado na lista.\n", value);
+}
+
+int main() {
+    int value, escolha;
+
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Inserir valor\n");
+        printf("2. Imprimir lista\n");
+        printf("3. Buscar valor\n");
+        printf("4. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &escolha);
+
+        switch (escolha) {
+            case 1:
+                printf("Digite o valor a ser inserido: ");
+                scanf("%d", &value);
+                insertFront(value);
+                break;
+            case 2:
+                printList();
+                break;
+            case 3:
+                printf("Digite o valor a ser buscado: ");
+                scanf("%d", &value);
+                searchValue(value);
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Opção inválida. Tente novamente.\n");
+        }
+    }
+    
+    return 0;
+} 
